@@ -5,7 +5,7 @@ import { FaTimes } from "react-icons/fa";
 
 
 function App() {
-  const [data, setData] = useState([
+  const [tasks, setTasks] = useState([
     {
       id: 1,
       text: "refund",
@@ -21,6 +21,10 @@ function App() {
     { id: 3, text: "movie", time: "June 11", checked: false },
   ]);
 
+  function deletetask(id){
+    setTasks(tasks.filter(task=>task.id !==id))
+  }
+
   return (
     <div className="container">
       <header className="header">
@@ -28,13 +32,14 @@ function App() {
         <Button />
       </header>
       <Task
-        text={data.map((task) => (
+        text={tasks.map((task) => (
           <div className="task-container">
             <div className="task">
             <h3>{task.text}</h3>
             <p>{task.time}</p>
             </div>
-            <FaTimes className="cancel-icon"/>
+            <FaTimes className="cancel-icon"
+            onClick={(id)=>deletetask(task.id)}/>
           </div>
         ))}
       />
