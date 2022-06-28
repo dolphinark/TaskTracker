@@ -1,6 +1,8 @@
 import { useState } from "react";
 import Task from "./components/Task";
 import Button from "./components/Button";
+import { FaTimes } from "react-icons/fa";
+
 
 function App() {
   const [data, setData] = useState([
@@ -27,9 +29,12 @@ function App() {
       </header>
       <Task
         text={data.map((task) => (
-          <div className="task">
+          <div className="task-container">
+            <div className="task">
             <h3>{task.text}</h3>
             <p>{task.time}</p>
+            </div>
+            <FaTimes className="cancel-icon"/>
           </div>
         ))}
       />

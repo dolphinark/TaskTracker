@@ -55,21 +55,20 @@ body {
   width: 100%;
 } */
 
-.task{
+.task-container{
   background: #f4f4f4;
   margin: 5px;
   padding: 10px 20px;
   cursor: pointer; 
   display: flex;
-  flex-direction:column;
-  justify-content: space-between;
-  /* align-items: center; */
-  
+  align-items: center; 
+  justify-content:right;
 }
 
-.task h3 {  /*這個部分注意，很不擅長*/
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  /* justify-content: end; */
+.task {
+  margin-right: auto;
+}
+
+.cancel-icon{
+  color:red;
 }
