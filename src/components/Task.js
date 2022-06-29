@@ -1,7 +1,8 @@
 function Task(props) {
   return (
-    <div className="div1">
-      <div className="div2">{props.text}</div>
+    <div>
+        <h3 >{props.text}</h3>
+        <p>{props.day}</p>
     </div>
   );
 }
