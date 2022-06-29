@@ -25,8 +25,8 @@ function App() {
   }
 
   function togglereminder(id) {
-    console.log(id);
-    alert(id);
+      // 又忘記這邊要用map
+    setTasks(tasks.map(task=>task.id===id?{...task,reminder:!task.reminder}:task))
   }
 
   const tasksElements = tasks.map((task) => (
@@ -44,23 +44,7 @@ function App() {
         <h1>Task Tracker</h1>
         <Button />
       </header>
-      {tasks.length > 0
-        ? //   <Task
-          //     text={tasks.map((task) => (
-          //       <div className="task-container">
-          //         <div className="task">
-          //           <h3>{task.text}</h3>
-          //           <p>{task.time}</p>
-          //         </div>
-          //         <FaTimes
-          //           className="cancel-icon"
-          //           onClick={(id) => deletetask(task.id)}
-          //         />
-          //       </div>
-          //     ))}
-          //  />
-          tasksElements
-        : "No Task Left Behind"}
+      {tasks.length > 0 ? tasksElements : "No Task Left Behind"}
     </div>
   );
 }
