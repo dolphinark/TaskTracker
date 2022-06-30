@@ -73,9 +73,6 @@ body {
   color:red;
 }
 
-.red{
-  background-color: red;
-  width: 10px;
+.reminder {
+  border-left: 5px solid green;
 }
-
-

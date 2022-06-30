@@ -1,7 +1,6 @@
 import { useState } from "react";
 import Task from "./components/Task";
 import Button from "./components/Button";
-import { FaTimes } from "react-icons/fa";
 
 function App() {
   const [tasks, setTasks] = useState([
@@ -21,21 +20,29 @@ function App() {
   ]);
 
   function deletetask(id) {
+    console.log("app裡面的",id)
     setTasks(tasks.filter((task) => task.id !== id));
   }
 
   function togglereminder(id) {
-      // 又忘記這邊要用map
-    setTasks(tasks.map(task=>task.id===id?{...task,reminder:!task.reminder}:task))
+    // 又忘記這邊要用map
+    setTasks(
+      tasks.map((task) =>
+        task.id === id ? { ...task, reminder: !task.reminder } : task
+      )
+    );
   }
 
-  const tasksElements = tasks.map((task) => (
-    <div className="task-container" onClick={() => togglereminder(task.id)}>
-      <div className="task">
-        <Task text={task.text} day={task.time} />
-      </div>
-      <FaTimes className="cancel-icon" onClick={(id) => deletetask(task.id)} />
-    </div>
+  const tasksElements = tasks.map((task, index) => (
+    <Task
+      id={task.id}
+      key={index}
+      text={task.text}
+      day={task.time}
+      reminder={task.reminder}
+      togglereminder={() => togglereminder(task.id)}
+      deletetask={()=>deletetask(task.id)}
+    />
   ));
 
   return (
