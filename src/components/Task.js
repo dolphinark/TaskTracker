@@ -4,7 +4,7 @@ function Task(props) {
   return (
     <div
       className={`task-container ${props.reminder ? "reminder" : ""}`}
-      onClick={props.togglereminder}
+      onDoubleClick={props.togglereminder}
     >
       <div className="task">
         <h3>{props.text}</h3>
@@ -12,9 +12,8 @@ function Task(props) {
       </div>
       <FaTimes
         className="cancel-icon"
-        onClick={(id)=>props.deletetask(props.id)}
+        onClick={(id) => props.deletetask(props.id)}
       />
-        {console.log("task裡面的",props.id)}
     </div>
   );
 }
