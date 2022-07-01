@@ -1,6 +1,7 @@
 import { useState } from "react";
-import Task from "./components/Task";
 import Button from "./components/Button";
+import AddTask from "./components/AddTask";
+import Tasks from "./components/Tasks";
 
 function App() {
   const [tasks, setTasks] = useState([
@@ -20,7 +21,6 @@ function App() {
   ]);
 
   function deletetask(id) {
-    console.log("app裡面的",id)
     setTasks(tasks.filter((task) => task.id !== id));
   }
 
@@ -33,17 +33,11 @@ function App() {
     );
   }
 
-  const tasksElements = tasks.map((task, index) => (
-    <Task
-      id={task.id}
-      key={index}
-      text={task.text}
-      day={task.time}
-      reminder={task.reminder}
-      togglereminder={() => togglereminder(task.id)}
-      deletetask={()=>deletetask(task.id)}
-    />
-  ));
+  function addTask(task){
+    const id = Math.floor(Math.random()*1000)+1 //忘記要給id
+    const newTask = {id,...task}
+    setTasks([...tasks,newTask]) //注意原本的data就是array
+  }
 
   return (
     <div className="container">
@@ -51,7 +45,16 @@ function App() {
         <h1>Task Tracker</h1>
         <Button />
       </header>
-      {tasks.length > 0 ? tasksElements : "No Task Left Behind"}
+      <AddTask addTask={addTask}/>
+      {tasks.length > 0 ? (
+        <Tasks
+          tasks={tasks}
+          deletetask={deletetask}
+          togglereminder={togglereminder}
+        />
+      ) : (
+        "No Task Left Behind"
+      )}
     </div>
   );
 }

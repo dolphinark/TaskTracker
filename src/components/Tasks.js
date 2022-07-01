@@ -8,10 +8,10 @@ function Tasks({ tasks, deletetask, togglereminder }) {
           key={index}
           text={task.text}
           day={task.time}
-          deletetask={deletetask}
           id={task.id}
-          togglereminder={togglereminder}
           reminder={task.reminder}
+          deletetask={deletetask}
+          togglereminder={togglereminder}
         />
       ))}
     </div>

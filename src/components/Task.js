@@ -4,7 +4,7 @@ function Task(props) {
   return (
     <div
       className={`task-container ${props.reminder ? "reminder" : ""}`}
-      onDoubleClick={props.togglereminder}
+      onDoubleClick={()=>props.togglereminder(props.id)}
     >
       <div className="task">
         <h3>{props.text}</h3>
@@ -12,7 +12,7 @@ function Task(props) {
       </div>
       <FaTimes
         className="cancel-icon"
-        onClick={(id) => props.deletetask(props.id)}
+        onClick={() => props.deletetask(props.id)}
       />
     </div>
   );
