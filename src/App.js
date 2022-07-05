@@ -1,26 +1,26 @@
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "./components/Button";
 import AddTask from "./components/AddTask";
 import Tasks from "./components/Tasks";
 
 function App() {
-  const [tasks, setTasks] = useState([
-    {
-      id: 1,
-      text: "refund",
-      time: "Dec 12",
-      reminder: true,
-    },
-    {
-      id: 2,
-      text: "buy ticket",
-      time: "Dec 12",
-      reminder: false,
-    },
-    { id: 3, text: "movie", time: "June 11", reminder: false },
-  ]);
-
+  const [tasks, setTasks] = useState([]);
   const [showAddForm, setShowAddForm] = useState(false);
+
+  useEffect(() => {
+    const getTasks = async () => {
+      const tasksFromServer = await fetchtasks();
+      setTasks(tasksFromServer);
+    };
+    getTasks();
+  }, []);
+
+  //fetch data
+  const fetchtasks = async () => {
+    const res = await fetch("http://localhost:5000/tasks");
+    const data = await res.json();
+    return data;
+  };
 
   function deletetask(id) {
     setTasks(tasks.filter((task) => task.id !== id));

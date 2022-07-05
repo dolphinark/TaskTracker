@@ -1,3 +1,5 @@
+import React from "react";
+
 function Button(props) {
   const style = {
     backgroundColor: props.color ? "red" : "green",

@@ -1,4 +1,5 @@
 import { FaTimes } from "react-icons/fa";
+import React from "react";
 
 function Task(props) {
   return (
