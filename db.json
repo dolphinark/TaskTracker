@@ -11,12 +11,6 @@
       "text": "buy ticket",
       "time": "Dec 12",
       "reminder": false
-    },
-    {
-      "id": 3,
-      "text": "movie",
-      "time": "June 11",
-      "reminder": false
     }
   ]
 }

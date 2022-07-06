@@ -22,12 +22,14 @@ function App() {
     return data;
   };
 
-  function deletetask(id) {
+  async function deletetask(id) {
+    await fetch(`http://localhost:5000/tasks/${id}`,{
+      method:"delete",
+    })
     setTasks(tasks.filter((task) => task.id !== id));
   }
 
-  function togglereminder(id) {
-    // 又忘記這邊要用map
+  async function togglereminder(id) {
     setTasks(
       tasks.map((task) =>
         task.id === id ? { ...task, reminder: !task.reminder } : task
@@ -35,10 +37,21 @@ function App() {
     );
   }
 
-  function addTask(task) {
-    const id = Math.floor(Math.random() * 1000) + 1; //忘記要給id
-    const newTask = { id, ...task };
-    setTasks([...tasks, newTask]); //注意原本的data就是array
+  async function addTask(task) {
+    const res = await fetch("http://localhost:5000/tasks",{
+      method:"post",
+      headers:{
+        "Content-type":"application/json"
+      },
+      body:JSON.stringify(task)
+    }) 
+
+    const data = await res.json()
+    setTasks([...tasks,data])
+
+    // const id = Math.floor(Math.random() * 1000) + 3;
+    // const newTask = { id, ...task };
+    // setTasks([...tasks, newTask]); //注意原本的data就是array
   }
 
   return (
