@@ -2,10 +2,15 @@ import React, { useEffect, useState } from "react";
 import Button from "./components/Button";
 import AddTask from "./components/AddTask";
 import Tasks from "./components/Tasks";
+import Footer from "./components/Footer";
+import { Route, Routes, useLocation } from "react-router-dom";
+import About from "./components/About";
 
 function App() {
   const [tasks, setTasks] = useState([]);
   const [showAddForm, setShowAddForm] = useState(false);
+
+  const location = useLocation();
 
   useEffect(() => {
     const getTasks = async () => {
@@ -22,33 +27,33 @@ function App() {
     return data;
   };
 
-    //fetch task
-    const fetchtask = async (id) => {
-      const res = await fetch(`http://localhost:5000/tasks/${id}`);
-      const data = await res.json();
-      return data;
-    };
+  //fetch task
+  const fetchtask = async (id) => {
+    const res = await fetch(`http://localhost:5000/tasks/${id}`);
+    const data = await res.json();
+    return data;
+  };
 
   async function deletetask(id) {
-    await fetch(`http://localhost:5000/tasks/${id}`,{
-      method:"delete",
-    })
+    await fetch(`http://localhost:5000/tasks/${id}`, {
+      method: "delete",
+    });
     setTasks(tasks.filter((task) => task.id !== id));
   }
 
   async function togglereminder(id) {
-    const taskToToggle = await fetchtask(id)
-    const updateTask = {...taskToToggle,reminder:!taskToToggle.reminder}
+    const taskToToggle = await fetchtask(id);
+    const updateTask = { ...taskToToggle, reminder: !taskToToggle.reminder };
 
-    const res = await fetch(`http://localhost:5000/tasks/${id}`,{
-      method:"PUT",
-      headers:{
-        "Content-type":"application/json"
+    const res = await fetch(`http://localhost:5000/tasks/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-type": "application/json",
       },
-      body:JSON.stringify(updateTask)
-    }) 
+      body: JSON.stringify(updateTask),
+    });
 
-    const data = await res.json()
+    const data = await res.json();
 
     setTasks(
       tasks.map((task) =>
@@ -58,16 +63,16 @@ function App() {
   }
 
   async function addTask(task) {
-    const res = await fetch("http://localhost:5000/tasks",{
-      method:"post",
-      headers:{
-        "Content-type":"application/json"
+    const res = await fetch("http://localhost:5000/tasks", {
+      method: "post",
+      headers: {
+        "Content-type": "application/json",
       },
-      body:JSON.stringify(task)
-    }) 
+      body: JSON.stringify(task),
+    });
 
-    const data = await res.json()
-    setTasks([...tasks,data])
+    const data = await res.json();
+    setTasks([...tasks, data]);
 
     // const id = Math.floor(Math.random() * 1000) + 3;
     // const newTask = { id, ...task };
@@ -78,24 +83,37 @@ function App() {
     <div className="container">
       <header className="header">
         <h1>Task Tracker</h1>
-        <Button
-          openAddTaskForm={() => {
-            setShowAddForm(!showAddForm);
-          }}
-          text={showAddForm ? "Close" : "Add"}
-          color={showAddForm}
-        />
+        {location.pathname === "/" && (
+          <Button
+            openAddTaskForm={() => {
+              setShowAddForm(!showAddForm);
+            }}
+            text={showAddForm ? "Close" : "Add"}
+            color={showAddForm}
+          />
+        )}
       </header>
-      {showAddForm && <AddTask addTask={addTask} />}
-      {tasks.length > 0 ? (
-        <Tasks
-          tasks={tasks}
-          deletetask={deletetask}
-          togglereminder={togglereminder}
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <>
+              {showAddForm && <AddTask addTask={addTask} />}
+              {tasks.length > 0 ? (
+                <Tasks
+                  tasks={tasks}
+                  deletetask={deletetask}
+                  togglereminder={togglereminder}
+                />
+              ) : (
+                "No Task Left Behind"
+              )}
+              <Footer />
+            </>
+          }
         />
-      ) : (
-        "No Task Left Behind"
-      )}
+        <Route path="/about" element={<About />} />
+      </Routes>
     </div>
   );
 }

@@ -3,7 +3,7 @@
     {
       "text": "buy ticket",
       "time": "Friday",
-      "reminder": false,
+      "reminder": true,
       "id": 3
     },
     {
